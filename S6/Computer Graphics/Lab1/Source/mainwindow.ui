@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>756</width>
+    <height>450</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="GLWidget" name="widget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Settings</string>
+      </property>
+      <widget class="QWidget" name="">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>181</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QComboBox" name="comboBox">
+          <item>
+           <property name="text">
+            <string>GL_POINTS</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>GL_LINES</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>GL_LINE_STRIP</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>GL_LINE_LOOP</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>GL_TRIANGLES</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>GL_TRIANGLE_STRIP</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>GL_TRIANGLE_FAN</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>GL_QUADS</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>GL_QUAD_STRIP</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>GL_POLYGON</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Количество вершин</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QScrollBar" name="horizontalScrollBar">
+          <property name="minimum">
+           <number>3</number>
+          </property>
+          <property name="maximum">
+           <number>20</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>GLWidget</class>
+   <extends>QWidget</extends>
+   <header>glwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
