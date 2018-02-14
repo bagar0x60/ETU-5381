@@ -4,7 +4,7 @@
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent){}
 
 void GLWidget::initializeGL() {
-    glClearColor(0, 0, 0, 1);
+    glClearColor(255, 255, 255, 1);
 }
 
 void GLWidget::paintGL() {
@@ -12,17 +12,19 @@ void GLWidget::paintGL() {
     double y0 = width  / 2;
 
     double radius = (height > width ? width : height) / 2;
-    glClearColor(0, 0, 0, 1);
+    glClearColor(255, 255, 255, 1);
     glClear(GL_COLOR_BUFFER_BIT);
 
+    glPointSize(5);
+    glLineWidth(5);
     glBegin(primitives[primitiveType]);
         for (int i = 0; i < verticesCount; i++) {
             double alpha = 2 * M_PI * i / verticesCount;
             double x = x0 + radius*cos(alpha);
             double y = y0 + radius*sin(alpha);
 
-            int inc = 255*i / verticesCount;
-            glColor3ub(inc, 255 - inc, 0);
+            double beta = 2 * M_PI * i / verticesCount;
+            glColor3d(sin(beta), sin(beta + 2*M_PI/3), sin(beta + 4*M_PI/3));
 
             glVertex2f(y, x);
         }
