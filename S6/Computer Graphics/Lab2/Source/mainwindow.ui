@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>756</width>
+    <height>450</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="GLWidget" name="widget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Settings</string>
+      </property>
+      <widget class="QCheckBox" name="isFlatCheckBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>340</y>
+         <width>81</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>GL_FLAT</string>
+       </property>
+      </widget>
+      <widget class="QWidget" name="">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>31</y>
+         <width>181</width>
+         <height>300</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="spacing">
+         <number>15</number>
+        </property>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QComboBox" name="comboBox">
+            <item>
+             <property name="text">
+              <string>GL_POINTS</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_LINES</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_LINE_STRIP</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_LINE_LOOP</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_TRIANGLES</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_TRIANGLE_STRIP</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_TRIANGLE_FAN</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_QUADS</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_QUAD_STRIP</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_POLYGON</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Количество вершин</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QScrollBar" name="horizontalScrollBar">
+            <property name="minimum">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <number>20</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QLabel" name="alphaTestLabel">
+            <property name="text">
+             <string>GL_ALPHA_TEST</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="alphaTestFunc">
+            <property name="currentIndex">
+             <number>7</number>
+            </property>
+            <item>
+             <property name="text">
+              <string>GL_NEVER</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_LESS</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_EQUAL</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_LEQUAL</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_GREATER</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_NOTEQUAL</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_GEQUAL</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_ALWAYS</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSlider" name="alphaTestRef">
+            <property name="maximum">
+             <number>100</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>GL_BLEND</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>sfactor</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="sfactor">
+            <item>
+             <property name="text">
+              <string>GL_ZERO</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_ONE</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_SRC_COLOR</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_ONE_MINUS_SRC_COLOR</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_DST_COLOR</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_ONE_MINUS_DST_COLOR</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_SRC_ALPHA</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_ONE_MINUS_SRC_ALPHA</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_DST_ALPHA</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_ONE_MINUS_DST_ALPHA</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_CONSTANT_COLOR</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_ONE_MINUS_CONSTANT_COLOR</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_CONSTANT_ALPHA</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_ONE_MINUS_CONSTANT_ALPHA</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_SRC_ALPHA_SATURATE</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>dfactor</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="dfactor">
+            <item>
+             <property name="text">
+              <string>GL_ZERO</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_ONE</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_SRC_COLOR</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_ONE_MINUS_SRC_COLOR</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_DST_COLOR</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_ONE_MINUS_DST_COLOR</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_SRC_ALPHA</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_ONE_MINUS_SRC_ALPHA</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_DST_ALPHA</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_ONE_MINUS_DST_ALPHA</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_CONSTANT_COLOR</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_ONE_MINUS_CONSTANT_COLOR</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_CONSTANT_ALPHA</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GL_ONE_MINUS_CONSTANT_ALPHA</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>GLWidget</class>
+   <extends>QWidget</extends>
+   <header>glwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
