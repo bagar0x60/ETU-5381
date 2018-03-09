@@ -1,0 +1,1 @@
+g++ main.cpp flagshader.cpp -o main.out -lglut -lGLEW -lGL
