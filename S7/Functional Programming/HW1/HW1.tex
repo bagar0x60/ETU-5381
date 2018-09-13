@@ -1,0 +1,195 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}         % кодировка исходного текста
+\usepackage[russian]{babel} % локализация и переносы
+
+\usepackage{amsmath, amssymb, amsthm, graphicx, epsfig, fancyhdr}
+\usepackage{cmap}                   % поиск в PDF
+
+
+%%% Дополнительная работа с математикой
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+%% Номера формул
+\mathtoolsset{showonlyrefs=true} % Показывать номера только у тех формул, на которые есть \eqref{} в тексте.
+
+%% Шрифты
+\usepackage{euscript} 
+\usepackage{mathrsfs} 
+\usepackage{dsfont}
+
+% для сноски в виде символа, а не номера
+\usepackage[symbol]{footmisc}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcounter{zcounter}
+
+\newcommand{\z}{\par\addtocounter{zcounter}{1}%
+\textsc{\fbox{\textbf{FP\arabic{zcounter}}}\quad} }
+
+\newcommand{\zopt}{\par\addtocounter{zcounter}{1}%
+\textsc{\fbox{FP\arabic{zcounter}}\quad} }
+
+\DeclareMathOperator{\FV}{FV}
+\DeclareMathOperator{\BV}{BV}
+
+\textwidth=175mm
+\oddsidemargin=-8mm
+\topmargin=-8mm
+
+\title{Функциональное программирование \\ Задание 1}
+\author{ Кобылянский А.В. \\ Группа 5381 }
+\date {}
+
+\begin{document}
+
+\pagenumbering{gobble}
+\maketitle
+\newpage
+\pagenumbering{arabic}
+
+\z Определите свободные и связанные переменные в термах и выполните подстановки:
+\break
+$\bullet \: [ux/x] \: (x\lambda y.yx)$
+\begin{align*}
+&\BV(x\lambda y.yx) = \{y\} \\
+&\FV(ux) = \{u, x\}
+\end{align*}
+\begin{align*}
+[ux/x] \: (x\lambda y.yx)  \equiv ux\lambda y.y(ux)
+\end{align*}
+
+$\bullet \: [uy/x] \: (x\lambda y.yx) $
+\begin{align*}
+&\BV(x\lambda y.yx) = \{y\} \\
+&\FV(uy) = \{u, y\}
+\end{align*}
+\begin{align*}
+[uy/x] \: (x\lambda y.yx)  \equiv_{\alpha} 
+[uy/x] \: (x\lambda y'.y'x) \equiv
+uy \lambda y'.y'(uy)
+\end{align*}
+
+$\bullet \: [xz/y] \: (xy(\lambda xz.xyz)y)$
+\begin{align*}
+&\BV(xy(\lambda xz.xyz)y) = \{x, z\} \\
+&\FV(xz) = \{x, z\}
+\end{align*}
+\begin{align*}
+[xz/y] \: (xy(\lambda xz.xyz)y) \equiv_\alpha
+[xz/y] \: (xy(\lambda x'z'.x'yz')y) \equiv
+x(xz)(\lambda x'z'.x'(xz)z')(xz)
+\end{align*}
+
+$\bullet \: [x(\lambda t. tt)s/x] \: (\lambda t. x (\lambda s.sx)t) $
+\begin{align*}
+&\BV(\lambda t. x (\lambda s.sx)t) = \{t, s\} \\
+&\FV(x(\lambda t. tt)s) = \{x, s\}
+\end{align*}
+\begin{align*}
+[x(\lambda t. tt)s/x] \: (\lambda t. x (\lambda s.sx)t) &\equiv_\alpha
+[x(\lambda t. tt)s/x] \: (\lambda t. x (\lambda s'.s'x)t) \\
+&\equiv \lambda t. x(\lambda t. tt)s (\lambda s'.s'(x(\lambda t. tt)s))t
+\end{align*}
+
+$\bullet \: [y(\lambda v. vx)/w]  \: ((\lambda x.x(\lambda y.yx)w)(\lambda w.wv)) $
+\begin{align*}
+&\BV((\lambda x.x(\lambda y.yx)w)(\lambda w.wv)) = \{x, y, w\} \\
+&\FV(y(\lambda v. vx)) = \{y, x\}
+\end{align*}
+\begin{align*}
+[y(\lambda v. vx)/w]  \: ((\lambda x.x(\lambda y.yx)w)(\lambda w.wv)) &\equiv_\alpha
+[y(\lambda v. vx)/w]  \: ((\lambda x'.x'(\lambda y'.y'x')w)(\lambda w.wv)) \\
+&\equiv (\lambda x'.x'(\lambda y'.y'x')(y\lambda v. vx)) \lambda w.wv
+\end{align*}
+\bigbreak
+
+\z Уберите лишние скобки и при возможности выполните $\beta$ "---преобразование:
+\break
+
+$\bullet \:  ((\lambda x.(\lambda y.((xy)z))) (a(bc)) ) $ 
+\begin{align*}
+    ((\lambda x.(\lambda y.((xy)z))) (a(bc)) ) &\rightarrow 
+    (\lambda xy.xyz) (a(bc)) \\ &\equiv_\beta
+    \lambda y.a(bc)yz
+\end{align*}
+
+$\bullet \:  ((\lambda x.(\lambda y.((yx)x))) (x(xy))y)  $ 
+\begin{align*}
+    ((\lambda x.(\lambda y.((yx)x))) (x(xy))y) &\rightarrow 
+    (\lambda xy.yxx) (x(xy)) y \\ &\equiv_\alpha
+    (\lambda x'y'.y'x'x') (x(xy)) y \\ &\equiv_\beta
+    y(x(xy))(x(xy))  
+\end{align*}
+\bigbreak
+
+\z Покажите, что:
+\[
+\mathbf{SKK} = \mathbf{I}
+\]
+\begin{align*}
+    \mathbf{SKK} &\equiv 
+    (\lambda xyz.xz(yz))\mathbf{KK} \\ &\equiv_\beta
+    (\lambda yz.\mathbf{K}z(yz))\mathbf{K} \\ &\equiv_\beta
+    (\lambda yz.z)\mathbf{K} \\ &\equiv_\beta
+    \lambda z.z \\ &\equiv_\alpha
+    \mathbf{I} 
+\end{align*}
+\bigbreak
+
+\z Определите терм для оператора $\textsc{xor}$.
+\begin{align*}
+    \mathop{XOR} &\equiv \lambda ab. a (\mathop{NOT}b) b     
+\end{align*}
+\bigbreak
+
+\z Реализуйте для чисел Чёрча функцию возведения в степень.
+\begin{align*}
+    \mathds{1}  &\equiv \lambda s. \lambda z. sz\\
+    \mathop{MULT} &\equiv \lambda a. \lambda b. \lambda s. \lambda z. a(bs)z\\   
+    \mathop{POW} &\equiv \lambda a. \lambda b. b \: (\mathop{MULT} \: a) \: \mathds{1}
+\end{align*}
+$\mathop{POW}ab = a^b$ 
+\bigbreak
+
+\zopt Покажите, что:
+\[
+\mathbf{B} = \mathbf{S (K S) K}
+\]
+\begin{align*}
+    \mathbf{S (K S) K} &\equiv (\lambda xyz.xz(yz))(\mathbf{KS})\mathbf{K} \\ &\equiv_\beta
+    \lambda z. (\mathbf{KS})z(\mathbf{K}z) \\ &\equiv_\beta
+    \lambda z. \mathbf{S} (\mathbf{K}z) \\ &\equiv
+    \lambda z. (\lambda abc.ac(bc)) (\mathbf{K}z)  \\ &\equiv_\beta
+    \lambda zbc.(\mathbf{K}z)c(bc)  \\ &\equiv_\beta
+    \lambda zbc.z(bc) \\& \equiv
+    \mathbf{B}
+\end{align*}
+\bigbreak
+
+\zopt Мы определяли оператор \textsc{not} как:
+\[
+not \equiv \lambda b. b \: fls \: tru
+\]
+Найдите более <<короткую>> (в смысле длины терма см.~ниже) версию оператора \textsc{not}.\\
+Длина терма $M$ ($lgh(M)$):
+\[
+\begin{aligned}
+ & lgh(x)= 1, \:  x \in V \\ 
+ & lgh(M N) = lgh(M) + lgh(N), \: M \in \Lambda \wedge N \in \Lambda \\
+ & lgh(\lambda x.M ) = 1 + lgh(M), \: x \in V \wedge M \in \Lambda  \\
+\end{aligned}
+\]
+Для $M \equiv \lambda b. b \: fls \: tru \equiv \lambda b. b \: (\lambda tf.f) \: (\lambda tf.t) $ длина терма равна $8$.
+\begin{align*}
+    \mathop{NOT} &\equiv \lambda b. \lambda t. \lambda f. bft \\
+    lgh(\mathop{NOT}) &= 6
+\end{align*}
+\bigbreak
+
+\zopt Реализуйте для чисел Чёрча функцию \textit{isEven}, возвращающую \textit{tru} на четных числах и \textit{fls} на нечетных.
+\begin{align*}
+    \mathop{isEven} &\equiv \lambda n. n \: \mathop{NOT} \: tru
+\end{align*}
+
+\end{document}
