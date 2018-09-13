@@ -1,0 +1,8 @@
+matplotlib
+cvxopt
+pystruct
+scipy
+imageio
+sklearn
+visvis
+scikit-image
