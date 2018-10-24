@@ -1,0 +1,208 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}         % кодировка исходного текста
+\usepackage[russian]{babel} % локализация и переносы
+
+\usepackage{amsmath, amssymb, amsthm, graphicx, epsfig, fancyhdr}
+\usepackage{cmap}                   % поиск в PDF
+
+
+%%% Дополнительная работа с математикой
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools, ebproof} % AMS
+\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+%% Диаграммы XY-pic для редукционных графов
+\usepackage[all]{xy}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+%% Номера формул
+\mathtoolsset{showonlyrefs=true} % Показывать номера только у тех формул, на которые есть \eqref{} в тексте.
+
+%% Шрифты
+\usepackage{euscript} 
+\usepackage{mathrsfs} 
+
+\usepackage{forloop}
+
+% для сноски в виде символа, а не номера
+\usepackage[symbol]{footmisc}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcounter{zcounter}
+
+\newcommand{\z}{\par\addtocounter{zcounter}{1}%
+\textsc{\fbox{\textbf{FP\arabic{zcounter}}}\quad} }
+
+\newcommand{\zopt}{\par\addtocounter{zcounter}{1}%
+\textsc{\fbox{FP\arabic{zcounter}}\quad} }
+
+\textwidth=175mm
+\oddsidemargin=-8mm
+\topmargin=-8mm
+
+\makeatletter
+\newcommand{\rmnum}[1]{\romannumeral #1}
+\newcommand{\Rmnum}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+\newcounter{symbcopy}
+\newcommand{\nsymbl}[2]{
+  \forloop{symbcopy}{0}{\value{symbcopy} < #2}{#1}
+}
+
+\newcommand{\eqdef}{\stackrel{\mathrm{def}}{=}}
+
+\title{Функциональное программирование \\ Задание 3}
+\author{ Кобылянский А.В. \\ Группа 5381 }
+\date {}
+
+
+\begin{document}
+\pagenumbering{gobble}
+\maketitle
+\newpage
+\pagenumbering{arabic}
+
+\z Найдите наиболее общие типы следующих термов:
+
+$ \bullet \: \lambda xy. \:xy : (\alpha \to \beta) \to \alpha \to \beta $
+
+Пусть $y: \alpha$, тогда из наличия апликации $xy$ имеем $x: \alpha \to \beta$. 
+Тип результата $(xy)$ соответственно будет $\beta$. 
+Тогда наша функция принимает 2 аргумента $\alpha \to \beta$ и $\alpha$ и возвращает $\beta$.
+
+$ \bullet \: \lambda xx. \:x  : \beta \to \alpha \to \alpha $
+
+Запишем $\lambda xx. \:x$ как $\lambda x.(\lambda x.x)$. 
+Тип внутреннего выражения, очевидно, $\alpha \to \alpha$. 
+Тип внешнего $x$, вообще говоря, может отличаться от внутреннего, обозначим его как $\beta$.
+Тогда наша функция принимает один аргумент $\beta$ и возвращает $\alpha \to \alpha$.
+
+$ \bullet \: \lambda xy. \:x(y(yx))$ -- не типизируем
+
+Пусть $x$ имеет некий тип $\tau$, тогда из апликации $yx$ имеем 
+$y : \tau \to \sigma$, а из апликации $y(yx)$ имеем $\tau = \sigma$. 
+Тогда из апликации $x$ в $x(y(yx))$ имеем $x: \tau \to \psi$ 
+для какого-то типа $\psi$. Но мы начали с того, что $x: \tau$, значит
+$\tau = \tau \to \psi$. Не сходится по арности, как с термом $\lambda x.xx$.
+
+$ \bullet \: \lambda xyz. \:x(y(xz)) : (\alpha \to \beta) \to (\beta \to \alpha) \to \alpha \to \beta$
+
+Пусть $z$ имеет тип $\alpha$, тогда из апликации $xz$ имеем 
+$x : \alpha \to \beta$, из апликации $y(xz)$ имеем $y : \beta \to \gamma$. 
+Из апликации $x(y(xz))$ имеем $x : \gamma \to \delta$. и, сравнвая с первой типизацие $x$,
+ получаем $\alpha = \gamma$ и $\beta = \delta$. Тип результата $x(y(xz))$ 
+будет тип, возвращаемый $x$, т.е. $\beta$.
+Тогда наша функция принимает 3 аргумента: $\alpha \to \beta$,
+$\beta \to \alpha$ и $\alpha$ и возвращает $\beta$.
+
+\break
+
+\z Выведите тип терма (приведите дерево вывода):
+\[
+(\lambda xy . \:x y)(\lambda tz.\:t)
+\]
+
+\begin{prooftree*}
+    \hypo{x : \alpha \to \beta \to \alpha, y : \alpha \vdash x : \alpha \to \beta \to \alpha }
+    \hypo{x : \alpha \to \beta \to \alpha, y : \alpha \vdash y : \alpha }
+    \infer2{x : \alpha \to \beta \to \alpha, y : \alpha \vdash (xy) : \beta \to \alpha}
+    \infer1{x : \alpha \to \beta \to \alpha \vdash (\lambda y.xy) : \alpha \to \beta \to \alpha}
+    \infer1{\vdash \lambda xy.xy : (\alpha \to \beta \to \alpha) \to \alpha \to \beta \to \alpha}
+    \hypo{t : \alpha, z: \beta \vdash t : \alpha}
+    \infer1{t: \alpha \vdash (\lambda z.t) : \beta \to \alpha}
+    \infer1{\vdash (\lambda tz.t) : \alpha \to \beta \to \alpha}
+    \infer2{\vdash (\lambda xy . \:x y)(\lambda tz.\:t) : \alpha \to \beta \to \alpha}
+\end{prooftree*}
+
+\break
+
+\z Найдите замкнутые термы следующих типов:
+
+$ \bullet \: \lambda xyzt.y(xtt)(zt) : (\gamma \to \gamma \to \beta)\to(\beta \to \alpha \to \delta)\to(\gamma \to \alpha)\to \gamma \to \delta $
+
+$x: \gamma \to \gamma \to \beta$, $t: \gamma$ значит $(xtt) : \beta$. 
+
+$z: \gamma \to \alpha$, $t: \gamma$ значит $(zt) : \alpha$.
+
+$y: \beta \to \alpha \to \delta$, значит $y(xtt)(zt) : \delta$
+
+
+$ \bullet \: \lambda xyztw.z(yw) : (\alpha \to \alpha \to \beta) \to (\gamma \to \beta) \to (\beta \to \delta) \to \alpha \to \gamma \to \delta $
+
+$y: \gamma \to \beta$, $w: \gamma$ значит $(yw) : \beta$. 
+
+$z: \beta \to \delta$, значит $z(yw) : \delta$.
+
+
+$ \bullet \: \lambda xy.x(\lambda z.yzz) : ((\alpha \to \beta) \to \alpha) \to (\alpha \to \alpha \to \beta) \to \alpha$
+
+$y: \alpha \to \alpha \to \beta$, значит $\lambda z.yzz : \alpha \to \beta$. 
+
+$x: (\alpha \to \beta) \to \alpha$, значит $x(\lambda z.yzz) : \alpha$.
+
+$ \bullet \: \lambda x y. y(x(\lambda z.yzz))(x(\lambda z.yzz)) : ((\alpha \to \beta) \to \alpha) \to (\alpha \to \alpha \to \beta) \to \beta$
+
+$y: \alpha \to \alpha \to \beta$ и из предыдущего пункта $x(\lambda z.yzz) : \alpha$, 
+значит $y(x(\lambda z.yzz))(x(\lambda z.yzz)) : \beta$. 
+
+\break
+
+\z Найдите замкнутый терм типа
+\[
+    (\alpha \to \beta ) \to ((\alpha \to \beta) \to \beta) \to \beta
+\]
+которому нельзя приписать тип
+\[
+     \gamma \to (\gamma \to \beta) \to \beta 
+\]
+
+Искомый терм:
+\[
+    \lambda xy.y(\lambda z.xz)
+\]
+Действительно, если $x : (\alpha \to \beta)$, то $(\lambda z.xz) : (\alpha \to \beta)$ и 
+$y(\lambda z.xz) : \beta$, все сходится. С другой стороны, при втором варианте типизации
+$x: \gamma$ -- не стрелочный тип и запись $\lambda z.xz$ становится нелегально.
+
+\break
+
+\z Типизируйте по Чёрчу:
+\[
+\mathbf{SKK}    
+\]
+В общем случае, для некоторых типов $ \phi, \psi, \sigma, \tau, \omega $
+\begin{align*}
+    \mathbf{K} &= \lambda x^{\phi}y^{\psi}.x : \phi \to \psi \to \phi \\
+    \mathbf{S} &= \lambda x^{\sigma \to \tau \to \omega}
+    y^{\sigma \to \tau}
+    z^{\sigma}.xz(yz) : 
+    (\sigma \to \tau \to \omega) \to (\sigma \to \tau) \to \sigma \to \omega
+\end{align*}
+
+Типизируем наше выражение
+\[
+    \mathbf{SKK} = 
+    (\lambda xyz.xz(yz))(\lambda xy.x)(\lambda xy.x)
+\]
+Пусть правое $\mathbf{K}$ имеет тип $\alpha \to \beta \to \alpha$. 
+Тогда тип $y^{\sigma \to \tau}$ в $\mathbf{S}$ будет $y: \alpha \to \beta \to \alpha$.
+Имеем $\sigma \to \tau = \alpha \to (\beta \to \alpha)$ или $\sigma = \alpha$ и 
+$\tau = \beta \to \alpha$. Из $\sigma = \alpha$ имеем для $z^{\sigma}$ в $\mathbf{S}$: $z: \alpha$.
+Так же получаем почти весь тип для $x^{\sigma \to \tau \to \omega}$ в $\mathbf{S}$:
+$x : \alpha \to (\beta \to \alpha) \to \omega$. 
+
+Из апликации $\mathbf{SK}$ имеем равенство типов $x$ и первого $\mathbf{K}$ :
+ $\alpha \to (\beta \to \alpha) \to \omega = \phi \to \psi \to \phi$ или
+ $\alpha = \phi$, $(\beta \to \alpha) = \psi$, $\omega = \phi = \alpha$.
+
+ Теперь мы можем записать полный тип выражения:
+\[
+    (\lambda x^{\alpha \to (\beta \to \alpha) \to \alpha}
+    y^{\alpha \to (\beta \to \alpha)}
+    z^{\alpha} . xz(yz)) 
+    (\lambda x^{\alpha}y^{\beta \to \alpha}.x)
+    (\lambda x^{\alpha}y^{\beta}.x) : \alpha \to \alpha
+\]
+
+\end{document}
