@@ -66,5 +66,6 @@ fib10 n = fst $ f (\(f0, f1) -> (f1, (f0 + f1) `mod` 10)) ((abs n) `mod` 60) (0,
 
 -- 7 -------------------------------
 isPalindrome :: String -> Bool
-isPalindrome s = s_low == reverse s_low
-    where s_low = map toLower s
+isPalindrome [] = True
+isPalindrome [x] = True
+isPalindrome (x:xs) = toLower x == toLower (last xs) && isPalindrome (init xs)
