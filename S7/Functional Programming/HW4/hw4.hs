@@ -41,14 +41,23 @@ digitsSum n = r + digitsSum q
     where (q, r) = divMod (abs n) 10
 
 -- 4 -------------------------------
-findMajority :: Eq a => [a] -> Maybe(a)
-findMajority [] = Nothing
-findMajority (x:xs) = Just(helper (x, 1) xs)
+boyerMoore :: Eq a => [a] -> Maybe(a)
+boyerMoore [] = Nothing
+boyerMoore (x:xs) = Just(helper (x, 1) xs)
     where   helper (z, _) [] = z
             helper (z, 0) (y:ys) = helper (y, 1) ys
             helper (z, n) (y:ys)
                 | z == y = helper (z, n + 1) ys
                 | z /= y = helper (z, n - 1) ys
+
+countElemntOccurrence :: Eq a => a -> [a] -> Int
+countElemntOccurrence x xs = (length . filter (== x)) xs
+
+findMajority :: Eq a => [a] -> Maybe(a)
+findMajority xs = case potentialMajority of 
+                    Just(x) -> if 2*(countElemntOccurrence x xs) > length xs then Just(x) else Nothing
+                    Nothing -> Nothing
+    where potentialMajority = boyerMoore xs
 
 -- 5 -------------------------------
 -- Немного расширил область определения, чтобы использовать f в 6 задаче.
