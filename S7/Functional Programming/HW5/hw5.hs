@@ -71,6 +71,7 @@ instance Foldable Postorder where
     foldMap f (PostO (Node l m r)) = (foldMap f (PostO l)) <> (foldMap f (PostO r)) <> f m
 
 instance Foldable Levelorder where
+    foldMap f (LevelO Nil) = mempty
     foldMap f (LevelO t)  = foldl1 (<>) (map (f . getValue) nodesInLevelOrder) 
         where   nodesInLevelOrder = concat (unfoldr nextLevel [t])
                 
