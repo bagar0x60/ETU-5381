@@ -20,11 +20,12 @@ triplewiseSum :: [Integer] -> [Integer] -> [Integer] -> [Integer]
 triplewiseSum a b c = map (\(x, y, z) -> x + y + z) $ zip3 a b c
 
 -- 3 -------------------------------  
-revRange :: (Char,Char) -> [Char]
-revRange (a, b) = unfoldr fun b
-    where fun x
-            | x >= a    = Just (x, chr $ pred $ ord x)
-            | otherwise = Nothing
+revRange :: (Char, Char) -> [Char]
+revRange (a, b) = unfoldr fun (b, False)
+    where fun (x, isEnd) 
+            | x < a || isEnd    = Nothing
+            | x > a             = Just (x, (pred x, False))
+            | x == a            = Just (x, (x, True))
 
 -- 4 -------------------------------  
 seriesK :: Int -> [Rational]
