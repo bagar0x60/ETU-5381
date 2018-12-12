@@ -1,0 +1,141 @@
+\problemset{Формальные языки}
+
+\graphicspath{{../1/}{../3/}}
+
+
+\begin{problem}
+Построить детерминированные \textbf{полные} конечные автоматы 
+(если надо, добавить “дьявольскую” вершину) и 
+представить описание в виде множества для 
+следующих языков над алфавитом $\Sigma = \{a, b, c\}$:
+\end{problem}
+
+(a) каждое слово языка содержит подслово $bcc$ или $bba$;
+$$
+    L = \{\omega_1\alpha\omega_2 \mid \omega_1, \omega_2 \in \Sigma^*, \alpha=bcc \lor \alpha = bba \}
+$$
+\begin{figure}[h]
+    \includegraphics[width=0.5\linewidth]{sm1.png}
+    \caption{Конечный автомат для задачи 1 (a)}
+\end{figure}
+
+(b) слова заканчиваются всегда на другую букву, чем та, на которую они начинаются;
+$$
+    L = \{x \omega y \mid \omega \in \Sigma^*, x, y \in \Sigma, x \ne y \} \cup \{\epsilon\}
+$$
+\begin{figure}[h]
+    \includegraphics[width=0.5\linewidth]{sm2.png}
+    \caption{Конечный автомат для задачи 1 (b)}
+\end{figure}
+
+(c) буква $c$ не встречается “левее” буквы $b$ ни в одном слове
+$$
+    L = \{\omega_1\omega_2 \mid \omega_1 \in \{a, b\}^*,
+    \omega_2 \in \{a, c\}^* \}
+$$
+\begin{figure}[h]
+    \includegraphics[width=0.5\linewidth]{sm3.png}
+    \caption{Конечный автомат для задачи 1 (c)}
+\end{figure}
+
+\begin{problem}
+    Минимизировать каждый из автоматов в предыдущем задании. Если автомат уже
+    минимален, доказать это.
+\end{problem}
+
+Каждый из автоматов минимален. 
+
+\begin{proof}
+    Детерминированный полный конечный автомат минимален $\Leftrightarrow$ 
+    в нем все вершины достижимы и классы эквивалентности состояний 
+    состоят из одного элемента, т.е. все состояния попарно неэквивалентны.
+
+    Запись $q_1 \nsim_{\omega} q_2$ будет означать, 
+    что строка $\omega$ различает состояния $q_1$ и $q_2$.  
+
+    (a)
+    \begin{align*}
+        q0 &\nsim_{cc} \lq{b}\lq; q0 \nsim_{c} \lq bc \lq; q0 \nsim_{a} \lq bb \lq; q0 \nsim_{\epsilon} F \\
+        \lq b \lq &\nsim_{c} \lq bc \lq; \lq b \lq \nsim_{a} \lq bb \lq; \lq b \lq \nsim_{\epsilon} F \\
+        \lq bc \lq &\nsim_{c} \lq bb \lq; \lq bc \lq \nsim_{\epsilon} F \\
+        \lq bb \lq &\nsim_{\epsilon} F
+    \end{align*}
+
+    (b)
+    \begin{align*}
+        q_0 &\nsim_{\epsilon} q_1, q_3, q_5; q_0 \nsim_{c} q_2, q_4; q_0 \nsim_{a} q_6   \\
+        q_1 &\nsim_{\epsilon} q_2, q_4, q_6; q_1 \nsim_{a} q_3, q_5 \\
+        q_2 &\nsim_{\epsilon} q_3, q_5; q_2 \nsim_{a} q_4, q_6 \\
+        q_3 &\nsim_{\epsilon} q_4, q_6; q_3 \nsim_{b} q_5 \\
+        q_4 &\nsim_{\epsilon} q_5; q_4 \nsim_{b} q_6 \\
+        q_5 &\nsim_{\epsilon} q_6
+    \end{align*}
+    (c)
+    \begin{align*}
+        q_0 &\nsim_{b} q_1; q_0 \nsim_{\epsilon} q_2 \\
+        q_1 &\nsim_{\epsilon} q_2
+    \end{align*}
+\end{proof}
+
+\begin{problem}
+    Реализовать алгоритм минимизации конечных автоматов.
+\end{problem}
+
+Программная реализация:
+
+\url{https://github.com/bagar0x60/automata-hw2}
+\break
+
+Примеры работы скрипта:
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.4\linewidth}
+      \includegraphics[width=\linewidth]{test2.png}
+      \caption{Исходный}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\linewidth}
+      \includegraphics[width=\linewidth]{test2_minimized.png}
+      \caption{Минимизированный}
+    \end{subfigure}
+    \caption{Пример 1 - удаление недостижимых состояний}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.6\linewidth}
+      \includegraphics[width=\linewidth]{test1.png}
+      \caption{Исходный}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\linewidth}
+      \includegraphics[width=\linewidth]{test1_minimized.png}
+      \caption{Минимизированный}
+    \end{subfigure}
+    \caption{Пример 2 - Объеденение стоковых состояний}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.6\linewidth}
+      \includegraphics[width=\linewidth]{test3.png}
+      \caption{Исходный}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\linewidth}
+      \includegraphics[width=\linewidth]{test3_minimized.png}
+      \caption{Минимизированный}
+    \end{subfigure}
+    \caption{Пример 3 - преобразование автомата без кончных состояний}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.8\linewidth}
+      \includegraphics[width=\linewidth]{test5.png}
+      \caption{Исходный}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.6\linewidth}
+      \includegraphics[width=\linewidth]{test5_minimized.png}
+      \caption{Минимизированный}
+    \end{subfigure}
+    \caption{Пример 4}
+\end{figure}

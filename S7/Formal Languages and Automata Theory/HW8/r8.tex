@@ -1,0 +1,102 @@
+\problemset{Формальные языки}
+\graphicspath{{img/}}
+
+\begin{problem}
+  Построить магазинные автоматы, распознающие следующие языки:
+\end{problem}
+
+$\bullet \: \{ a^nb^{m+n}c^m \mid n,m \geq 1 \}$
+\begin{figure}[h]
+  \includegraphics[width=0.6\linewidth]{sm1.png}
+  \caption{Автомат 1}
+\end{figure}
+
+$\bullet \: \{ a^nb^mc^n \mid n,m \geq 1 \}$
+\begin{figure}[h]
+  \includegraphics[width=0.6\linewidth]{sm2.png}
+  \caption{Автомат 2}
+\end{figure}
+
+$\bullet \: \{ a^nb^{2n} \mid n \geq 1 \}$
+\begin{figure}[h]
+  \includegraphics[width=0.6\linewidth]{sm3.png}
+  \caption{Автомат 3}
+\end{figure}
+
+\break
+
+\begin{problem}
+  Доказать или опровергнуть, что следующие языки
+  являются контекстно-свободными:
+\end{problem}
+
+$\bullet \: \{ a^{n+m}b^mc^nd^m \mid n, m \geq 0 \}$
+
+Для всех слов $s$ данного языка должно выполняться
+\begin{align*}
+  |s|_a &= |s|_c + |s|_b \\
+  |s|_b &= |s|_d \\
+\end{align*}
+
+Предположим, что язык регулярный, тогда должна выполняться лемма о накачке.
+$p$ - конста из леммы.
+Возьмем слово $s$ принадлежащее нашему языку $s = a^{2p}b^pc^pd^p = uvwxy, |vwx| \leq p, |vx| \geq 1$. 
+Рассмотрим слово $s' = uv^2wx^2y$.
+
+1. $vwx = a^i, i \leq p$ тогда
+\begin{align*}
+  |s'|_a &= |s|_a + \Delta, \Delta \geq 1 \\
+  |s'|_c + |s'|_b &= |s|_c + |s|_b = |s|_a \neq |s'|_a
+\end{align*}
+
+2. $vwx = a^ib^j, i + j \leq p$ тогда
+\begin{align*}
+  |s'|_a + |s'|_b &= |s|_a + |s|_b + \Delta, \Delta \geq 1 \\
+  |s'|_c + 2|s'|_d &= |s|_c + 2|s|_d = |s|_a + |s|_b \neq |s'|_a + |s'|_b
+\end{align*}
+
+3. $vwx = b^i, i \leq p$ рассуждения идентичны рассуждениям в пункте 2
+
+4. $vwx = b^ic^j, i + j \leq p$ тогда
+\begin{align*}
+  |s'|_b + |s'|_c &= |s|_b + |s|_c + \Delta, \Delta \geq 1 \\
+  |s'|_a &= |s|_a = |s|_b + |s|_c \neq |s'|_b + |s'|_c
+\end{align*}
+
+5. $vwx = c^i, i \leq p$ рассуждения идентичны рассуждениям в пункте 4
+
+6. $vwx = c^id^j, i + j \leq p$ тогда
+\begin{align*}
+  |s'|_c + |s'|_d &= |s|_c + |s|_d + \Delta, \Delta \geq 1 \\
+  |s'|_a &= |s|_a = |s|_c + |s|_d \neq |s'|_c + |s'|_d
+\end{align*}
+
+7. $vwx = d^i, i \leq p$ рассуждения идентичны рассуждениям в пункте 6
+
+Из данных рассуждений следует, что $s'$ не может принадлежать языку,
+значит лемма о накачке не выполняется и язык не регулярный.\\
+
+$\bullet \: \{ a^nb^na^n \mid n \geq 0 \} \cup 
+  \{a^kb^lc^m \mid k \geq 0, l \geq 0, m \geq 20 \}$
+
+Заметим, что
+\begin{align}
+  &\{ a^nb^na^n \mid n \geq 0 \} \cup 
+  \{a^kb^lc^m \mid k \geq 0, l \geq 0, m \geq 20 \} =\nonumber\\
+  =\: &\{ a^nb^na^n \mid 0 \leq n < 20 \} \cup
+  \{ a^nb^na^n \mid n \geq 20 \} \cup
+  \{a^kb^lc^m \mid k \geq 0, l \geq 0, m \geq 20 \} =\nonumber\\
+  =\: &\{ a^nb^na^n \mid 0 \leq n \leq 20 \} \cup
+  \{a^kb^lc^m \mid k \geq 0, l \geq 0, m \geq 20 \}
+\end{align}
+
+так как
+\begin{align*}
+  \{ a^nb^na^n \mid n \geq 20 \} \subset
+  \{a^kb^lc^m \mid k \geq 0, l \geq 0, m \geq 20 \}
+\end{align*}
+
+Первое множество в (1) конечно, значит это регулярный язык. 
+Второе множество описывается регулярным выражением $a^*b^*a^{20}a^*$,
+значит этот язык тоже регулярный. Объеденение регулярных языков -
+регулярный язык. Регулярные языки контекстно свободны.

@@ -1,0 +1,168 @@
+\problemset{Формальные языки}
+
+\graphicspath{{../1/}{../2/}}
+\newcommand\eqdef{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily def}}}{=}}}
+
+\begin{problem}
+    Найти описание лексического синтаксиса вашего второго самого любимого языка программирования. В нем найти описание следующих языков:
+\end{problem}
+
+Для сокращение записи, определим следующие синтаксические конструкции
+для регулярных выражений:
+
+\begin{align*}
+    A+ &\eqdef AA* \\
+    A? &\eqdef A|\epsilon \\
+    [a_1-a_n] &\eqdef a_1 | a_2 | ... | a_n
+\end{align*}
+
+Если мы захотим использовать один из специальных символов 
+`+`, `*`, `?`, `|`, `(`, `)`, `[`, `]` в качестве одного из символов нашего языка, 
+то мы будем экранировать этот символ обратным слешем: `$\backslash$+`, `$\backslash$*', ...  
+
+$\bullet$ язык идентификаторов;
+
+Описание: \url{https://doc.rust-lang.org/grammar.html#identifiers}
+
+Регулярное выражение: $([a-z]|[A-Z]|\_)([0-9]|[a-z]|[A-Z]|\_)*$
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.4\linewidth}
+      \includegraphics[width=\linewidth]{ident_undetermenized.png}
+      \caption{Недетерминированный}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\linewidth}
+      \includegraphics[width=\linewidth]{ident.png}
+      \caption{Детерминированный минимальный}
+    \end{subfigure}
+    \caption{Конечные автоматы для языка идентификаторов}
+\end{figure}
+
+\break
+
+$\bullet$ язык каких-нибудь чисел (целых в десятичной счисления, с плавающей точкой,
+любых других).
+
+Описание: \url{https://doc.rust-lang.org/grammar.html#number-literals}
+
+Опишем только десятичные числа с плавающей точкой 
+(прим. $42, 12.34, 1.79E2, 100\_000\_000$ и т.д.) 
+
+Регулярное выражение: $[0-9]([0-9]|\_)*(.([0-9]|\_)+)?((e|E)(-|\backslash+)?([0-9]|\_)+)?$
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.8\linewidth}
+      \includegraphics[width=\linewidth]{numbers_undetermenized.png}
+      \caption{Недетерминированный}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.8\linewidth}
+      \includegraphics[width=\linewidth]{numbers.png}
+      \caption{Детерминированный минимальный}
+    \end{subfigure}
+    \caption{Конечные автоматы для языка идентификаторов}
+\end{figure}
+
+\break
+
+$\bullet$ язык ключевых слов (можно какого-нибудь их конечного подмножества);
+
+Описание: \url{https://doc.rust-lang.org/grammar.html#keywords}
+
+Регулярное выражение: 
+\begin{align*}
+    &\_|abstract|alignof|as|become|box|\\
+    &break|const|continue|crate|\\
+    &do|else|enum|extern|false|\\
+    &final|fn|for|if|impl|\\
+    &in|let|loop|macro|match|\\
+    &mod|move|mut|offsetof|override|\\
+    &priv|proc|pub|pure|ref|\\
+    &return|Self|self|sizeof|static|\\
+    &struct|super|trait|true|type|\\
+    &typeof|unsafe|unsized|use|virtual|\\
+    &where|while|yield 
+\end{align*}
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.4\linewidth}
+      \includegraphics[width=\linewidth]{keywords_undetermenized.png}
+      \caption{Недетерминированный}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\linewidth}
+      \includegraphics[width=\linewidth]{keywords.png}
+      \caption{Детерминированный минимальный}
+    \end{subfigure}
+    \caption{Конечные автоматы для языка ключевых слов}
+\end{figure}
+
+\break
+
+\begin{problem}
+    Реализовать алгоритм Томпсона детерминизации конечных автоматов.
+\end{problem}
+
+Программная реализация:
+
+\url{https://github.com/bagar0x60/automata-hw}
+\break
+
+Примеры работы скрипта:
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.6\linewidth}
+      \includegraphics[width=\linewidth]{test0.png}
+      \caption{Исходный}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.6\linewidth}
+      \includegraphics[width=\linewidth]{test0_determinized.png}
+      \caption{Детерминированный}
+    \end{subfigure}
+    \caption{Пример детерминизации 1}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.4\linewidth}
+      \includegraphics[width=\linewidth]{test1.png}
+      \caption{Исходный}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\linewidth}
+      \includegraphics[width=\linewidth]{test1_determinized.png}
+      \caption{Детерминированный}
+    \end{subfigure}
+    \caption{Пример детерминизации 2}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.3\linewidth}
+      \includegraphics[width=\linewidth]{test2.png}
+      \caption{Исходный}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.6\linewidth}
+      \includegraphics[width=\linewidth]{test2_determinized.png}
+      \caption{Детерминированный}
+    \end{subfigure}
+    \caption{Пример детерминизации 2}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.4\linewidth}
+      \includegraphics[width=\linewidth]{test3.png}
+      \caption{Исходный}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\linewidth}
+        \includegraphics[width=\linewidth]{test3_no_eps.png}
+        \caption{Без $\epsilon$-переходов}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.6\linewidth}
+      \includegraphics[width=\linewidth]{test3_determinized.png}
+      \caption{Детерминированный}
+    \end{subfigure}
+    \caption{Пример детерминизации 3}
+\end{figure}
